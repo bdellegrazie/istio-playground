@@ -1,0 +1,55 @@
+---
+
+{{ readFile "../config/repositories.yaml" }}
+
+releases:
+  - name: cert-manager
+    namespace: {{ .Values.cert_manager_namespace | quote }}
+    chart: jetstack/cert-manager
+    version: {{ .Values.cert_manager_chart_semver | quote }}
+    disableValidationOnInstall: true
+    values:
+      - {{ toYaml .Values.cert_manager | nindent 8 }}
+
+  - name: trust-manager
+    namespace: {{ .Values.cert_manager_namespace | quote }}
+    chart: jetstack/trust-manager
+    version: {{ .Values.trust_manager_chart_semver | quote }}
+    disableValidationOnInstall: true
+    needs:
+      - "{{ .Values.cert_manager_namespace }}/cert-manager"
+    values:
+      - {{ toYaml .Values.trust_manager | nindent 8 }}
+
+  - name: internal-ca
+    namespace: {{ .Values.cert_manager_namespace | quote }}
+    chart: ../charts/cert-manager-ca
+    condition: internal_ca.enabled
+    disableValidationOnInstall: true
+    needs:
+      - "{{ .Values.cert_manager_namespace }}/cert-manager"
+      - "{{ .Values.cert_manager_namespace }}/trust-manager"
+    values:
+      - {{ toYaml .Values.internal_ca | nindent 8 }}
+
+  - name: wildcard-cert
+    namespace: {{ default .Values.wildcard_cert_namespace | quote }}
+    chart: ../charts/wildcard-cert
+    condition: wildcard_cert.enabled
+    disableValidationOnInstall: true
+    needs:
+      - "{{ .Values.cert_manager_namespace }}/internal-ca"
+    values:
+      - {{ toYaml .Values.wildcard_cert | nindent 8 }}
+
+environments:
+  default:
+    values:
+      - ../environments/common/cert-manager.yaml
+      - ../environments/common/trust-manager.yaml
+      - ../environments/common/wildcard-cert.yaml
+      - ../environments/default/cert-manager.yaml
+      - ../environments/default/wildcard-cert.yaml
+      - ../environments/default/istio.yaml
+      - ../environments/default/istio_ingress.yaml
+    missingFileHandler: Error

@@ -1,0 +1,2 @@
+CA cert Common Name: {{ .Values.caCert.commonName }}
+Cluster CA issuer: {{ .Values.caIssuer.name }}

@@ -1,0 +1,45 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: app-gateway
+  namespace: default
+  labels:
+    app.kubernetes.io/name: app-gateway
+    app.kubernetes.io/version: v1
+    app.kubernetes.io/component: gateway
+    app.kubernetes.io/part-of: echo
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http2
+        protocol: HTTP
+      hosts:
+        - "http-echo.dev.local"
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      hosts:
+        - "*.dev.local"
+      tls:
+        mode: SIMPLE # enables HTTPS on this port
+        credentialName: wildcard-tls
+    - port:
+        number: 2702
+        name: tcp-echo-gateway-port
+        protocol: TCP
+      hosts:
+        - "tcp-echo.dev.local"
+    - port:
+        number: 2703
+        name: tls-echo-gateway-port
+        protocol: TLS
+      tls:
+        mode: SIMPLE
+        credentialName: wildcard-tls
+      hosts:
+        - "*.dev.local"

@@ -1,0 +1,6 @@
+---
+trust_manager_chart_semver: "0.7.0"
+
+trust_manager:
+  crds:
+    enabled: true

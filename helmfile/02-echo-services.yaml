@@ -1,0 +1,20 @@
+---
+
+{{ readFile "../config/repositories.yaml" }}
+
+releases:
+  - name: echo-services
+    chart: ../charts/echo-kustomize
+    namespace: default
+
+environments:
+  default:
+    values:
+      - ../environments/common/cert-manager.yaml
+      - ../environments/common/trust-manager.yaml
+      - ../environments/common/wildcard-cert.yaml
+      - ../environments/default/cert-manager.yaml
+      - ../environments/default/wildcard-cert.yaml
+      - ../environments/default/istio.yaml
+      - ../environments/default/istio_ingress.yaml
+    missingFileHandler: Error

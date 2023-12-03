@@ -1,0 +1,5 @@
+---
+resources:
+  - app_gateway.yaml
+  - http_echo.yaml
+  - tcp_echo.yaml

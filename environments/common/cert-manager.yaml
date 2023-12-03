@@ -1,0 +1,6 @@
+---
+cert_manager_chart_semver: "1.13.2"
+cert_manager_namespace: cert-manager
+
+cert_manager:
+  installCRDs: true

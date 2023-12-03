@@ -1,0 +1,4 @@
+---
+wildcard_cert_namespace: istio-ingress
+wildcard_cert:
+  enabled: false

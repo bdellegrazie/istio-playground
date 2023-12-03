@@ -1,0 +1,39 @@
+---
+# Default values for cert-manager-ca.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+selfIssuer:
+  crlDistributionPoints: []
+  name: "self-signed-issuer"
+caCert:
+  name: "cluster-ca-root"
+  commonName: "Internal Root CA Certificate"
+  emailAddresses: ["noreply@example.com"]
+  secretName: ca-root-keypair  # pragma: allowlist secret
+  secretTemplate:
+    annotations: {}
+    labels: {}
+  subject:
+    organizations: ["BDG"]
+    organizationalUnits: ["Software Development"]
+  usages:
+    - crl sign
+    - cert sign
+    - digital signature
+    - key agreement
+    - key encipherment
+    - ocsp signing
+    - signing
+caIssuer:
+  name: "cluster-issuer"
+caBundle:
+  name: "ca-trust-bundle"
+  sources:
+    - useDefaultCAs: true
+    - secret:
+        name: ca-root-keypair
+        key: "ca.crt"
+  target:
+    configMap:
+      key: "ca-certs.pem"

@@ -1,0 +1,7 @@
+---
+istio:
+  chart_version: '1.20.0'
+
+istio_cni:
+  enabled: false
+

@@ -1,0 +1,26 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "wildcard-cert.name" . }}
+spec:
+  secretName: {{ .Values.cert.secretName | quote }}
+  duration: {{ .Values.cert.duration | quote }}
+  renewBefore: {{ .Values.cert.rewBefore | quote }}
+  subject:
+    organizations:
+      {{ toYaml .Values.cert.subject.organizations | nindent 6 }}
+  commonName: {{ .Values.cert.commonName | quote }}
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+  dnsNames:
+    {{ toYaml .Values.cert.dnsNames | nindent 4 }}
+  issuerRef:
+    {{ toYaml .Values.cert.issuerRef | nindent 4 }}

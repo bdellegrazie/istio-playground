@@ -1,0 +1,24 @@
+---
+istio_ingress:
+  service:
+    ports:
+      - name: status-port
+        port: 15021
+        protocol: TCP
+        targetPort: 15021
+      - name: http2
+        port: 80
+        protocol: TCP
+        targetPort: 80
+      - name: https
+        port: 443
+        protocol: TCP
+        targetPort: 443
+      - name: tcp-echo-gateway-port
+        protocol: TCP
+        port: 2702
+        targetPort: 2702
+      - name: tcps-echo-gateway-port
+        protocol: TCP
+        port: 2703
+        targetPort: 2703

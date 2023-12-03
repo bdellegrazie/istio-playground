@@ -1,0 +1,12 @@
+---
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: {{ .Values.caBundle.name | quote }}
+  labels:
+    {{- include "cert-manager-ca.labels" . | nindent 4 }}
+spec:
+  sources:
+    {{- toYaml .Values.caBundle.sources | nindent 4 }}
+  target:
+    {{- toYaml .Values.caBundle.target | nindent 4 }}

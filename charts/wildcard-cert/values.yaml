@@ -1,0 +1,19 @@
+---
+# Default values for wildcard-cert.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+cert:
+  secretName: wildcard-tls  # pragma: allowlist secret
+  duration: 2160h  # 90d
+  renewBefore: 360h  # 15d
+  subject:
+    organizations:
+      - BDG
+  commonName: "*.dev.local"
+  dnsNames:
+    - "*.dev.local"
+  issuerRef:
+    name: cluster-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
