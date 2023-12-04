@@ -52,4 +52,4 @@ Known Issues:
 ### TCP/TLS tests
 
 1. Using netcat (`nc`) access unencrypted: `nc tcp-echo.dev.local 2702`. System should resolve and echo service should give a valid response. Anything you type should be sent back.
-2. Using openssl client (`openssl s_client`) `openssl s_client -k -connect tcp-echo.dev.local:2703` (encrypted, bypass CA warnings). System should resolve and echo service should give a valid response. Anything you type should be sent back.
+2. Using openssl client (`openssl s_client`) `openssl s_client -connect tcp-echo.dev.local:2703` (encrypted, bypass CA warnings). System should resolve and echo service should give a valid response. Anything you type should be sent back.
