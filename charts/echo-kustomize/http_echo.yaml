@@ -81,6 +81,7 @@ spec:
         app.kubernetes.io/version: v1
         app.kubernetes.io/component: pod
         app.kubernetes.io/part-of: http-echo
+        sidecar.istio.io/inject: "true"
     spec:
       serviceAccountName: http-echo-sa
       containers:

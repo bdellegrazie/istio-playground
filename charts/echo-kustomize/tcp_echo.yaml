@@ -80,6 +80,7 @@ spec:
         app.kubernetes.io/version: v1
         app.kubernetes.io/component: pod
         app.kubernetes.io/part-of: tcp-echo
+        sidecar.istio.io/inject: "true"
     spec:
       serviceAccountName: tcp-echo-sa
       containers:
